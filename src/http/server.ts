@@ -1,11 +1,16 @@
 import express from 'express';
-import "reflect-metadata"
-import AppDataSource from '../dataSource/DataSource ';
+import { AppDataSource } from '../data-source';
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
-AppDataSource.initialize();
+AppDataSource.initialize()
+    .then(() => {
+        console.log('Data Source has been initialized!');
+    })
+    .catch((err) => {
+        console.error('Error during Data Source initialization:', err);
+    });
     
 
 app.get('/', (req, res) => {
