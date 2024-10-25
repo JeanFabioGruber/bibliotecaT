@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import {generoController} from '../controllers/generoController';
+import {generoController} from '../controller/generoController';
 
 const router = Router({ mergeParams: true });
 
