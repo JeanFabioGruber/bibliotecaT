@@ -1,4 +1,4 @@
-import { error } from "console";
+import { mapLivro } from "../../../mapper/mappers";
 import { generoRepository } from "../../genero/repositories/generoRepository";
 import { livroRepository } from "../repositories/livroRepository";
 import  livroCreateValidation  from "../validation/livroCreateValidation"
@@ -7,7 +7,9 @@ export class livroService {
     async getLivros() {
         try {
             const livros = await livroRepository.find();
-            return livros;
+            return livros.map(mapLivro)           
+    
+                       
         } catch (error) {
             return error;
         }
@@ -56,17 +58,16 @@ export class livroService {
         }
 
         try {
-            // Validate input data
             const { error } = livroCreateValidation.validate({
                 titulo,
                 descricao,
                 totaldepaginas,
                 data_lancamento,
-                generosIds
+                generosIds               
             });
 
-            if (Error) {
-                throw new Error(`Validation error: ${Error}`);
+            if (error) {
+                throw new Error(`Validation error: ${error}`);
             }
 
             const generos = await generoRepository.findByIds(generosIds);
@@ -76,14 +77,17 @@ export class livroService {
                 descricao,
                 totaldepaginas,
                 data_lancamento,
-                genero: generos
+                genero: generos                
             });
 
-            return await livroRepository.save(novoLivro);
-        } catch (Error) {
-            console.error("Erro ao adicionar livro:", Error);
-        
+            await livroRepository.save(novoLivro); 
             
+            return mapLivro(novoLivro)
+            
+
+        } catch (error) {
+            console.error("Erro ao adicionar livro:", error);
+            throw new Error("Não foi possível adicionar o livro.");
         }
     }
 
