@@ -1,16 +1,17 @@
-// import { Router } from "express";
-// import {LivroController} from "../controller/livroController";
+import { Router } from "express";
+import {LivroController} from "../controller/livroController";
 
-// const router = Router({ mergeParams: true });
+const router = Router({ mergeParams: true });
 
-// const livroController = new LivroController();
+const livroController = new LivroController();
 
-// router.get('/livros', livroController.getLivros);
-// router.post('/livro', livroController.createLivro);
-// // router.put('/livros/:id', livroController.updateLivro);
-// // router.delete('/livros/:id', livroController.deleteLivro);
+router.get('/livros', livroController.getLivros);
+router.post('/livro', livroController.createLivro);
+router.put('/livro/:id', livroController.updateLivro);
+router.delete('/livro/:id', livroController.deleteLivro);
+router.put('/livro/:id/genero', livroController.updateLivroGenero);
 
-// export default router;
+export default router;
 
 
 

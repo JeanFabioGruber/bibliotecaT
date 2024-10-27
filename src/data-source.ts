@@ -2,7 +2,7 @@ import "dotenv/config"
 import 'reflect-metadata'
 import {DataSource} from "typeorm";
 
-const PORT = process.env.DB_PORT ? parseInt(process.env.DB_PORT) : 5432
+const PORT = process.env.DB_PORT ? parseInt(process.env.DB_PORT) : 5433
 
 export const AppDataSource = new DataSource({
     type: "postgres",
@@ -19,5 +19,4 @@ export const AppDataSource = new DataSource({
     ]
 })
 
-console.log(process.env.DB_USER, process.env.DB_PASS, process.env.DB_NAME, process.env.DB_PORT);
 

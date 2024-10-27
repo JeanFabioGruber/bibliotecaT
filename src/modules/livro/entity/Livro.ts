@@ -27,7 +27,7 @@ export class Livro {
   @UpdateDateColumn()
   updated_at: Date;
 
-    @ManyToMany(() => Genero, genero => genero.livros)
+    @ManyToMany(() => Genero, genero => genero.livros, { cascade: true, eager: true, onDelete: 'CASCADE' })
     @JoinTable({
         name: ' genero_livro',
         joinColumn: { 
