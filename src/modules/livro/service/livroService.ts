@@ -1,4 +1,4 @@
-import { mapLivro } from "../../../mapper/mappers";
+import { mapLivro } from "../mapper/livroMapper";
 import { generoRepository } from "../../genero/repositories/generoRepository";
 import { livroRepository } from "../repositories/livroRepository";
 import  livroCreateValidation  from "../validation/livroCreateValidation"
