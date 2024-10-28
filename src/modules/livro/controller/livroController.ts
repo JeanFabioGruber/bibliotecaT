@@ -15,11 +15,11 @@ export class LivroController {
     }
 
     async createLivro(req: Request, res: Response): Promise<void> {
-        const { titulo, descricao, totaldepaginas, data_lancamento,  generosIds} = req.body;
+        const { titulo, descricao, totaldepaginas, data_lancamento,  generosIds, editoraIds} = req.body;
         
 
         try {            
-            const livro = await livroservice.adicionarLivro(titulo, descricao, totaldepaginas, data_lancamento, generosIds);
+            const livro = await livroservice.adicionarLivro(titulo, descricao, totaldepaginas, data_lancamento, generosIds, editoraIds);
             res.status(201).json(livro);
             
 

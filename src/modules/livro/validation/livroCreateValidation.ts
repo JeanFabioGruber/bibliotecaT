@@ -5,6 +5,7 @@ export default Joi.object({
   descricao: Joi.string().required(),
   totaldepaginas: Joi.number().required(),
   data_lancamento: Joi.date().required(),
-    generosIds: Joi.array().items(Joi.number()).required()
+    generosIds: Joi.array().items(Joi.number()).required(),
+    editoraIds: Joi.array().items(Joi.number()).required()
 });
 

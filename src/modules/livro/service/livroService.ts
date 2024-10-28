@@ -2,6 +2,8 @@ import { mapLivro } from "../mapper/livroMapper";
 import { generoRepository } from "../../genero/repositories/generoRepository";
 import { livroRepository } from "../repositories/livroRepository";
 import  livroCreateValidation  from "../validation/livroCreateValidation"
+import e from "express";
+import { editoraRepository } from "../../editora/repositoires/editoraRepository";
 
 export class livroService {    
     async getLivros() {
@@ -19,7 +21,8 @@ export class livroService {
         descricao: string,
         totaldepaginas: number,
         data_lancamento: Date,
-        generosIds: number[]
+        generosIds: number[],
+        editoraIds: number[],
     ) {
         if (generosIds.length === 0) {
             throw new Error("O livro deve ter pelo menos um gênero.");
@@ -63,7 +66,8 @@ export class livroService {
                 descricao,
                 totaldepaginas,
                 data_lancamento,
-                generosIds               
+                generosIds,
+                editoraIds,            
             });
 
             if (error) {
@@ -71,13 +75,15 @@ export class livroService {
             }
 
             const generos = await generoRepository.findByIds(generosIds);
+            const editoras = await editoraRepository.findByIds(editoraIds);
 
             const novoLivro = livroRepository.create({
                 titulo,
                 descricao,
                 totaldepaginas,
                 data_lancamento,
-                genero: generos                
+                genero: generos,
+                editora: editoras              
             });
 
             await livroRepository.save(novoLivro); 
@@ -108,10 +114,7 @@ export class livroService {
 
             await livroRepository.save(livro);
     
-            return await livroRepository.findOne({
-                where: { id },
-                relations: ['genero']
-            });
+            return mapLivro(livro);
         } catch (error) {
             console.error("Erro ao atualizar livro:", error);
             throw new Error("Não foi possível atualizar o livro.");
@@ -121,8 +124,7 @@ export class livroService {
     }
 
     async deleteLivro(id: number) {
-        try {
-            livroRepository.delete
+        try {            
             const livro = await livroRepository.findOneOrFail({ where: { id } });
             await livroRepository.remove(livro);
         } catch (error) {
