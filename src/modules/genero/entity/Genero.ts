@@ -12,7 +12,7 @@ export class Genero {
   @Column()
   descricao: string;
 
-  @ManyToMany(() => Livro, livro => livro.genero)
+  @ManyToMany(() => Livro, livro => livro.genero)	
   livros: Livro[];
 
   @CreateDateColumn()

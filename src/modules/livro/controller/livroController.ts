@@ -1,6 +1,4 @@
 import { Request, Response } from "express";
-import { livroRepository } from "../repositories/livroRepository";
-import { generoRepository } from "../../genero/repositories/generoRepository";
 import { livroService } from "../service/livroService";
 
 const livroservice = new livroService();

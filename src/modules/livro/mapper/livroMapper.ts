@@ -1,6 +1,8 @@
 import { Livro } from "../entity/Livro";
 
 import { mapGeneros } from "../../genero/mapper/generoMapper";
+import { Editora } from "../../editora/entity/Editora";
+import { mapEditora } from "../../editora/mapper/editoraMapper";
 
 export const mapLivro = (livro: Livro) => ({
     id: livro.id,
@@ -9,6 +11,7 @@ export const mapLivro = (livro: Livro) => ({
     totaldepaginas: (livro.totaldepaginas),
     data_lancamento: formatDate(livro.data_lancamento),
     genero: mapGeneros(livro.genero),
+    editora: mapEditora(livro.editora)
 });
 
 const formatDate = (date: Date) => {
