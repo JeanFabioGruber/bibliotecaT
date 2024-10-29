@@ -68,6 +68,30 @@ export class LivroController {
         }
     }
 
+    async updateLivroAutor(req: Request, res: Response): Promise<void> {
+        const { id } = req.params;
+        const { autoresIds } = req.body;
+
+        try {
+            const livro = await livroservice.updateLivroAutor(Number(id), autoresIds);
+            res.json(livro);
+        } catch (error) {
+            res.status(500).json({ mesage: error });
+        }
+    }
+
+    async updateLivroEditora(req: Request, res: Response): Promise<void> {
+        const { id } = req.params;
+        const { editoraIds } = req.body;
+
+        try {
+            const livro = await livroservice.updateLivroEditora(Number(id), editoraIds);
+            res.json(livro);
+        } catch (error) {
+            res.status(500).json({ mesage: error });
+        }
+    }
+
 
 
 }

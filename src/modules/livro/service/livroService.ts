@@ -153,6 +153,38 @@ export class livroService {
             throw new Error("Não foi possível atualizar os gêneros do livro.");
         }
     }
+
+    async updateLivroAutor(id: number, autoresIds: number[]) {
+        try {
+            const livro = await livroRepository.findOneOrFail({ where: { id } });
+            const autores = await autorRepository.findByIds(autoresIds);
+            livro.autor = autores;
+            await livroRepository.save(livro);
+            return await livroRepository.findOneOrFail({
+                where: { id },
+                relations: ['autor']
+            });
+        } catch (error) {
+            console.error("Erro ao atualizar autores do livro:", error);
+            throw new Error("Não foi possível atualizar os autores do livro.");
+        }
+    }
+
+    async updateLivroEditora(id: number, editorasIds: number[]) {
+        try {
+            const livro = await livroRepository.findOneOrFail({ where: { id } });
+            const editoras = await editoraRepository.findByIds(editorasIds);
+            livro.editora = editoras;
+            await livroRepository.save(livro);
+            return await livroRepository.findOneOrFail({
+                where: { id },
+                relations: ['editora']
+            });
+        } catch (error) {
+            console.error("Erro ao atualizar editoras do livro:", error);
+            throw new Error("Não foi possível atualizar as editoras do livro.");
+        }
+    }
     
     
 }
