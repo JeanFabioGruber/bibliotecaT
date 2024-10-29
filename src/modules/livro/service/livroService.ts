@@ -2,7 +2,6 @@ import { mapLivro } from "../mapper/livroMapper";
 import { generoRepository } from "../../genero/repositories/generoRepository";
 import { livroRepository } from "../repositories/livroRepository";
 import  livroCreateValidation  from "../validation/livroCreateValidation"
-import e from "express";
 import { editoraRepository } from "../../editora/repositoires/editoraRepository";
 import { autorRepository } from "../../autor/repositories/autorRepository";
 
