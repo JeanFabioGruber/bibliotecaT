@@ -1,6 +1,6 @@
 import express from 'express';
 import { AppDataSource } from '../data-source';
-import routes from "./routes/routes";
+import routes from "../modules/bibioteca/http/routesBiblioteca/bibliotecaRoutes";
 
 const app = express();
 const port = process.env.PORT || 3000;
