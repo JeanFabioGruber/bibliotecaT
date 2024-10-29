@@ -3,6 +3,7 @@ import { Entity, JoinTable, ManyToMany } from "typeorm";
 import { Genero } from "../../genero/entity/Genero";
 import { Editora } from "../../editora/entity/Editora";
 import { Column, CreateDateColumn, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Autor } from "../../autor/entity/Autor";
 
 
 @Entity()
@@ -27,6 +28,21 @@ export class Livro {
 
   @UpdateDateColumn()
   updated_at: Date;
+
+    @ManyToMany(() => Autor, autor => autor.livros, { cascade: true, eager: true, onDelete: 'CASCADE' })
+    @JoinTable({
+        name: 'autor_livro',
+        joinColumn: { 
+          name: 'autor_id',
+          referencedColumnName: 'id' 
+        },
+        inverseJoinColumn: { 
+          name: 'livro_id',
+          referencedColumnName: 'id'
+        }
+
+    })
+    autor: Autor[];
 
     @ManyToMany(() => Genero, genero => genero.livros, { cascade: true, eager: true, onDelete: 'CASCADE' })
     @JoinTable({

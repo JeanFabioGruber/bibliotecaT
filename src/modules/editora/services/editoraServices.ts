@@ -4,10 +4,6 @@ import { editoraCreateValidation } from '../validation/editoraCreateValidation';
 
 
 export class editoraServices {
-//   constructor() {
-//     this.editoraRepository = editoraRepository;
-//   }
-
   async getAll() {
     try {
       const editora = await editoraRepository.find();

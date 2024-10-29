@@ -4,6 +4,7 @@ import { livroRepository } from "../repositories/livroRepository";
 import  livroCreateValidation  from "../validation/livroCreateValidation"
 import e from "express";
 import { editoraRepository } from "../../editora/repositoires/editoraRepository";
+import { autorRepository } from "../../autor/repositories/autorRepository";
 
 export class livroService {    
     async getLivros() {
@@ -23,6 +24,7 @@ export class livroService {
         data_lancamento: Date,
         generosIds: number[],
         editoraIds: number[],
+        autoresIds: number[]
     ) {
         if (generosIds.length === 0) {
             throw new Error("O livro deve ter pelo menos um gênero.");
@@ -67,7 +69,8 @@ export class livroService {
                 totaldepaginas,
                 data_lancamento,
                 generosIds,
-                editoraIds,            
+                editoraIds,
+                autoresIds            
             });
 
             if (error) {
@@ -76,6 +79,7 @@ export class livroService {
 
             const generos = await generoRepository.findByIds(generosIds);
             const editoras = await editoraRepository.findByIds(editoraIds);
+            const autores = await autorRepository.findByIds(autoresIds);
 
             const novoLivro = livroRepository.create({
                 titulo,
@@ -83,7 +87,8 @@ export class livroService {
                 totaldepaginas,
                 data_lancamento,
                 genero: generos,
-                editora: editoras              
+                editora: editoras,
+                autor: autores              
             });
 
             await livroRepository.save(novoLivro); 
