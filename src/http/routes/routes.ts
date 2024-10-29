@@ -1,9 +1,9 @@
 
 import { Router } from 'express';
-import generoRoutes from '../../modules/genero/routes/generoRoutes';
-import livroRoutes from '../../modules/livro/routes/livroRoutes';
-import editoraRoutes from '../../modules/editora/routes/editoraRoutes';
-import autorRoutes from '../../modules/autor/routes/autorRoutes';
+import generoRoutes from '../../modules/bibioteca/genero/routes/generoRoutes';
+import livroRoutes from '../../modules/bibioteca/livro/routes/livroRoutes';
+import editoraRoutes from '../../modules/bibioteca/editora/routes/editoraRoutes';
+import autorRoutes from '../../modules/bibioteca/autor/routes/autorRoutes';
 
 const routes = Router( { mergeParams: true } );
 
