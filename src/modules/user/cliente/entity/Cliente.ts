@@ -4,7 +4,7 @@ import { Pedido } from "../../../pedido/pedido/entity/Pedido";
 
 
 @Entity()
-export class User {
+export class Cliente {
     @PrimaryGeneratedColumn()
     id: number;
 
@@ -18,9 +18,12 @@ export class User {
     celular: string;
 
     @Column()
-    cep: number
+    cep: number;
 
-    @ManyToMany(() => Pedido, pedido => pedido.user)
+    @Column('simple-array')
+    address: string[];
+
+    @ManyToMany(() => Pedido, pedido => pedido.cliente)
     pedido: Pedido[]
 
 }

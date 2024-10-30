@@ -1,5 +1,5 @@
 import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
-import { User } from "../../../cliente/cliente/entity/User";
+import { Cliente} from "../../../user/cliente/entity/Cliente";
 import { Livro } from "../../../bibioteca/livro/entity/Livro";
 
 @Entity()
@@ -16,7 +16,7 @@ export class Pedido {
     @Column()
     datadeDevolucao: Date;
 
-    @ManyToMany(() => User, user => user.pedido, {eager: true})
+    @ManyToMany(() => Cliente, cliente => cliente.pedido, {eager: true})
     @JoinTable({
         name: 'user_pedido',
         joinColumn: {
@@ -29,7 +29,7 @@ export class Pedido {
         }
 
     })
-    user: User[];
+    cliente: Cliente[];    
 
     @ManyToMany(() => Livro, livro => livro.pedido, {eager: true})
     @JoinTable({
