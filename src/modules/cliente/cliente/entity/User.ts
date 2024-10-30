@@ -18,7 +18,7 @@ export class User {
     celular: string;
 
     @Column()
-    endereco: string
+    cep: number
 
     @ManyToMany(() => Pedido, pedido => pedido.user)
     pedido: Pedido[]

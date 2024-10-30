@@ -1,5 +1,6 @@
 import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
 import { User } from "../../../cliente/cliente/entity/User";
+import { Livro } from "../../../bibioteca/livro/entity/Livro";
 
 @Entity()
 export class Pedido {
@@ -29,6 +30,20 @@ export class Pedido {
 
     })
     user: User[];
+
+    @ManyToMany(() => Livro, livro => livro.pedido, {eager: true})
+    @JoinTable({
+        name: 'livro_pedido',
+        joinColumn: {
+            name: 'livro_id',
+            referencedColumnName: 'id'
+        },
+        inverseJoinColumn: {
+            name: 'pedido_id',
+            referencedColumnName: 'id'
+        }
+    })
+    livro: Livro[]
 
 
 

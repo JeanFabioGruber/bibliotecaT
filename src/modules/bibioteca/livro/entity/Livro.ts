@@ -4,6 +4,7 @@ import { Genero } from "../../genero/entity/Genero";
 import { Editora } from "../../editora/entity/Editora";
 import { Column, CreateDateColumn, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { Autor } from "../../autor/entity/Autor";
+import { Pedido } from "../../../pedido/pedido/entity/Pedido";
 
 
 @Entity()
@@ -73,5 +74,8 @@ export class Livro {
 
     })
     editora: Editora[];
+
+    @ManyToMany(() => Pedido, pedido => pedido.livro)
+    pedido: Pedido[];
 
 }
