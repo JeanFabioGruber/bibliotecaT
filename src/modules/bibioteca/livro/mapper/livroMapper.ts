@@ -9,9 +9,9 @@ export const mapLivro = (livro: Livro) => ({
     descricao: livro.descricao,
     totaldepaginas: livro.totaldepaginas,
     data_lancamento: formatDate(livro.data_lancamento),
-    genero: mapGeneros(livro.genero),
-    editora: mapEditora(livro.editora),
-    autor: mapAutor(livro.autor)
+    genero: livro.genero.map(mapGeneros),
+    editora: livro.editora.map(mapEditora),
+    autor: livro.autor.map(mapAutor)
 });
 
 const formatDate = (date: any): string => {

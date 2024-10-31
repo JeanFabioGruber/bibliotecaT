@@ -6,7 +6,7 @@ export class clienteServices {
     async getCliente() {        
         try {
             const cliente = await clienteRepository.find();
-            return mapCliente(cliente);
+            return cliente.map(mapCliente);
         } catch (error) {
             return error;
         }
@@ -92,7 +92,7 @@ export class clienteServices {
                 return 'Cliente não encontrado';
             }
 
-            return mapCliente([cliente]);
+            return mapCliente(cliente);
         } catch (error) {
             console.error('Erro ao buscar cliente:', error);
             return error;

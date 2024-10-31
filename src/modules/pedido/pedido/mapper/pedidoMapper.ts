@@ -1,14 +1,21 @@
+import { stat } from "fs";
 import { mapLivro } from "../../../bibioteca/livro/mapper/livroMapper";
 import { mapCliente } from "../../../user/cliente/mapper/clienteMapper";
 import { Pedido } from "../entity/Pedido";
 
-export const mapPedido = (pedidos: Pedido[]) => pedidos.map(pedido => ({
+export const mapPedido = (pedido: Pedido) => ({
     id: pedido.id,
     data_pedido: formatDate(pedido.datadoPedido),
     data_entrega: formatDate(pedido.datadeDevolucao),    
-    cliente: mapCliente(pedido.cliente),
-    livro: pedido.livro.map(mapLivro)
-}));
+    cliente: pedido.cliente.map(mapCliente),
+    livro: pedido.livro.map(mapLivro),
+    status: pedido.status
+});
+
+
+
+
+
 
 const formatDate = (date: any): string => {
     // Verifica se 'date' é uma instância de Date; se não, tenta convertê-lo

@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, ManyToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { Pedido } from "../../../pedido/pedido/entity/Pedido";
 
 
@@ -22,6 +22,12 @@ export class Cliente {
 
     @Column('simple-array')
     address: string[];
+
+    @CreateDateColumn()
+    created_at: Date;
+
+    @UpdateDateColumn()
+    updated_at: Date;
 
     @ManyToMany(() => Pedido, pedido => pedido.cliente)
     pedido: Pedido[]

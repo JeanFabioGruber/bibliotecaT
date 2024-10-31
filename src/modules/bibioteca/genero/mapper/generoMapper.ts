@@ -1,5 +1,7 @@
 import { Genero } from "../entity/Genero";
 
-export const mapGeneros = (generos: Genero[]) => {
-    return generos.map(({ id, nome, descricao }) => ({ id, nome, descricao }));
-};
+export const mapGeneros = (generos: Genero) => ({
+    id: generos.id,
+    nome: generos.nome,
+    descricao: generos.descricao
+})

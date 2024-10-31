@@ -7,7 +7,7 @@ export class editoraServices {
   async getAll() {
     try {
       const editora = await editoraRepository.find();
-      return mapEditora(editora);
+      return editora.map(mapEditora);
      
     } catch (error) {
 
@@ -34,7 +34,7 @@ export class editoraServices {
       }
       const newEditora = editoraRepository.create({ nome, cnpj, telefone, email });
       await editoraRepository.save(newEditora);
-      return mapEditora([newEditora]);
+      return mapEditora(newEditora);
     } catch (error) {
       return error;
     }
@@ -48,7 +48,7 @@ export class editoraServices {
       editoraToUpdate.telefone = telefone;
       editoraToUpdate.email = email;
       await editoraRepository.save(editoraToUpdate);
-      return mapEditora([editoraToUpdate]);
+      return mapEditora(editoraToUpdate);
     } catch (error) {
       return error;
     } 

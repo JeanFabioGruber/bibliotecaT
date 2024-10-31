@@ -1,6 +1,10 @@
 import { Autor } from "../entity/Autor";
+import { mapLivro } from "../../livro/mapper/livroMapper";
 
-export const mapAutor = (autores: Autor[]) => { 
-    return autores.map(({ id, nome, idade, cidade }) => ({ id, nome, idade, cidade }));
-};
+export const mapAutor = (autores: Autor) => ({
+    id: autores.id,
+    nome: autores.nome,
+    idade: autores.idade,
+    cidade: autores.cidade    
+})
      

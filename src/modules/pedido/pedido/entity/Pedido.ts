@@ -1,4 +1,4 @@
-import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { Cliente} from "../../../user/cliente/entity/Cliente";
 import { Livro } from "../../../bibioteca/livro/entity/Livro";
 
@@ -16,11 +16,20 @@ export class Pedido {
     @Column()
     datadeDevolucao: Date;
 
+    @Column( {default: false})
+    status: boolean;
+
+    @CreateDateColumn()
+    created_at: Date;
+
+    @UpdateDateColumn()
+    updated_at: Date;
+
     @ManyToMany(() => Cliente, cliente => cliente.pedido, {eager: true})
     @JoinTable({
-        name: 'user_pedido',
+        name: 'cliente_pedido',
         joinColumn: {
-            name: 'user_id',
+            name: 'cliente_id',
             referencedColumnName: 'id'
         },
         inverseJoinColumn: {

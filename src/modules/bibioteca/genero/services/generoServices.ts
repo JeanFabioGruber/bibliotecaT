@@ -7,7 +7,7 @@ export class generoServices {
     async getAll() {
         try {
             const generos = await generoRepository.find();
-            return mapGeneros(generos);
+            return generos.map(mapGeneros);
         } catch (error) {
             return error;
         }
@@ -16,7 +16,7 @@ export class generoServices {
     async getById(id: number) {
         try {
             const genero = await generoRepository.findOneOrFail({ where: { id } });
-            return mapGeneros([genero]);
+            return mapGeneros(genero);
         } catch (error) {
             return error;
         }
@@ -30,7 +30,7 @@ export class generoServices {
             }
             const newGenero = generoRepository.create({ nome, descricao });
             await generoRepository.save(newGenero);
-            return mapGeneros([newGenero]);
+            return mapGeneros(newGenero);
         } catch (error) {
             return error;
         }
@@ -43,7 +43,7 @@ export class generoServices {
             generoToUpdate.nome = nome;
             generoToUpdate.descricao = descricao;
             await generoRepository.save(generoToUpdate);
-            return mapGeneros([generoToUpdate]);
+            return mapGeneros(generoToUpdate);
         } catch (error) {
             return error;
         }

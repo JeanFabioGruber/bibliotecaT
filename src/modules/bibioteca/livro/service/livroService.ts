@@ -4,6 +4,7 @@ import { livroRepository } from "../repositories/livroRepository";
 import  livroCreateValidation  from "../validation/livroCreateValidation"
 import { editoraRepository } from "../../editora/repositoires/editoraRepository";
 import { autorRepository } from "../../autor/repositories/autorRepository";
+import { In } from "typeorm";
 
 export class livroService {    
     async getLivros() {
@@ -76,9 +77,9 @@ export class livroService {
                 throw new Error(`Validation error: ${error}`);
             }
 
-            const generos = await generoRepository.findByIds(generosIds);
-            const editoras = await editoraRepository.findByIds(editoraIds);
-            const autores = await autorRepository.findByIds(autoresIds);
+            const generos = await generoRepository.findBy({ id: In(generosIds) });
+            const editoras = await editoraRepository.findBy({ id: In(editoraIds) });
+            const autores = await autorRepository.findBy({ id: In(autoresIds) });
 
             const novoLivro = livroRepository.create({
                 titulo,

@@ -8,7 +8,7 @@ export class autorServices  {
     async getAutores() {
         try {
             const autores = await autorRepository.find()
-            return mapAutor(autores);
+            return autores.map(mapAutor);
         } catch (error) {
             return error;
         }
@@ -23,7 +23,7 @@ export class autorServices  {
             }            
             const newautor = await autorRepository.create({ nome, idade, cidade });
             await autorRepository.save(newautor);
-            return mapAutor([newautor]);
+            return mapAutor(newautor);
         } catch (error) {
             return error;
         }
@@ -36,7 +36,7 @@ export class autorServices  {
             autorToUpdate.idade = idade;
             autorToUpdate.cidade = cidade;
             await autorRepository.save(autorToUpdate);
-            return mapAutor([autorToUpdate]);
+            return mapAutor(autorToUpdate);
         } catch (error) {
             return error;
         }

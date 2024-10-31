@@ -1,12 +1,14 @@
 import { Cliente } from "../entity/Cliente";
 
 
-export const mapCliente = (cliente: Cliente[]) => {
-    return cliente.map(({ id, nome, cpf, celular, cep, address }) => ({ id, nome, cpf, celular, cep, address }));
-    
+export const mapCliente = (cliente: Cliente) => ({
+    id: cliente.id,
+    nome: cliente.nome,
+    cpf: cliente.cpf,
+    celular: cliente.celular,
+    cep: cliente.cep
 
-
-};
+})
 
 
 
