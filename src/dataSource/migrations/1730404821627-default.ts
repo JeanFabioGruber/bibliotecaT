@@ -1,15 +1,15 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-export class Default1730398580360 implements MigrationInterface {
-    name = 'Default1730398580360'
+export class Default1730404821627 implements MigrationInterface {
+    name = 'Default1730404821627'
 
     public async up(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query(`CREATE TABLE "cliente" ("id" SERIAL NOT NULL, "nome" character varying NOT NULL, "cpf" character varying NOT NULL, "celular" character varying NOT NULL, "cep" integer NOT NULL, "address" text NOT NULL, "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "PK_18990e8df6cf7fe71b9dc0f5f39" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE TABLE "genero" ("id" SERIAL NOT NULL, "nome" character varying NOT NULL, "descricao" character varying NOT NULL, "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "PK_681c2c8d602304f33f9cc74e6ad" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE TABLE "editora" ("id" SERIAL NOT NULL, "nome" character varying NOT NULL, "cnpj" character varying NOT NULL, "telefone" character varying NOT NULL, "email" character varying NOT NULL, "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "PK_cf0161c67e3c4104aee2b1a5bb8" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE TABLE "autor" ("id" SERIAL NOT NULL, "nome" character varying NOT NULL, "idade" integer NOT NULL, "cidade" character varying NOT NULL, CONSTRAINT "PK_51d3959df48c82010ae1c4907fb" PRIMARY KEY ("id"))`);
-        await queryRunner.query(`CREATE TABLE "livro" ("id" SERIAL NOT NULL, "titulo" character varying NOT NULL, "descricao" character varying NOT NULL, "totaldepaginas" integer NOT NULL, "data_lancamento" TIMESTAMP NOT NULL, "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "PK_5601163ea69da49108c4f7854cf" PRIMARY KEY ("id"))`);
-        await queryRunner.query(`CREATE TABLE "pedido" ("id" SERIAL NOT NULL, "valor" integer NOT NULL, "datadoPedido" TIMESTAMP NOT NULL, "datadeDevolucao" TIMESTAMP NOT NULL, "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "PK_af8d8b3d07fae559c37f56b3f43" PRIMARY KEY ("id"))`);
+        await queryRunner.query(`CREATE TABLE "livro" ("id" SERIAL NOT NULL, "titulo" character varying NOT NULL, "descricao" character varying NOT NULL, "totaldepaginas" integer NOT NULL, "data_lancamento" TIMESTAMP NOT NULL, "status" boolean NOT NULL DEFAULT false, "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "PK_5601163ea69da49108c4f7854cf" PRIMARY KEY ("id"))`);
+        await queryRunner.query(`CREATE TABLE "pedido" ("id" SERIAL NOT NULL, "valor" integer NOT NULL, "datadoPedido" TIMESTAMP NOT NULL, "datadeDevolucao" TIMESTAMP NOT NULL, "status" boolean NOT NULL DEFAULT false, "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "PK_af8d8b3d07fae559c37f56b3f43" PRIMARY KEY ("id"))`);
+        await queryRunner.query(`CREATE TABLE "cliente" ("id" SERIAL NOT NULL, "nome" character varying NOT NULL, "cpf" character varying NOT NULL, "celular" character varying NOT NULL, "cep" integer NOT NULL, "address" text NOT NULL, "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "PK_18990e8df6cf7fe71b9dc0f5f39" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE TABLE "autor_livro" ("autor_id" integer NOT NULL, "livro_id" integer NOT NULL, CONSTRAINT "PK_072c9425906fc63eec3f2121e50" PRIMARY KEY ("autor_id", "livro_id"))`);
         await queryRunner.query(`CREATE INDEX "IDX_ea70b19a06aed70abb7585eb05" ON "autor_livro" ("autor_id") `);
         await queryRunner.query(`CREATE INDEX "IDX_28ce08939b82f537d282f9dbf9" ON "autor_livro" ("livro_id") `);
@@ -63,12 +63,12 @@ export class Default1730398580360 implements MigrationInterface {
         await queryRunner.query(`DROP INDEX "public"."IDX_28ce08939b82f537d282f9dbf9"`);
         await queryRunner.query(`DROP INDEX "public"."IDX_ea70b19a06aed70abb7585eb05"`);
         await queryRunner.query(`DROP TABLE "autor_livro"`);
+        await queryRunner.query(`DROP TABLE "cliente"`);
         await queryRunner.query(`DROP TABLE "pedido"`);
         await queryRunner.query(`DROP TABLE "livro"`);
         await queryRunner.query(`DROP TABLE "autor"`);
         await queryRunner.query(`DROP TABLE "editora"`);
         await queryRunner.query(`DROP TABLE "genero"`);
-        await queryRunner.query(`DROP TABLE "cliente"`);
     }
 
 }

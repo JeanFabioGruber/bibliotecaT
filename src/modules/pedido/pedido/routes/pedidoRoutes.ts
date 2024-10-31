@@ -13,5 +13,4 @@ pedidoRoutes.delete("/pedido/:id", pedidocontroller.deletePedido);
 pedidoRoutes.put("/devolverpedido/:id", pedidocontroller.devolverPedido);
 
 
-
 export default pedidoRoutes;

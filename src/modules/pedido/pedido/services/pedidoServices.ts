@@ -36,6 +36,12 @@ export class pedidoServices {
                 where: { id: In(livroIds) }                
             });
 
+            const statusLivro = livros.find(livro => livro.status === true);
+
+            if (statusLivro) {
+                throw new Error("Um ou mais livros já foram alugados.");
+            }
+
             if (!cliente) {
                 throw new Error("Cliente não encontrado");
             }
@@ -52,16 +58,21 @@ export class pedidoServices {
                 valor,
                 datadoPedido,
                 datadeDevolucao,
+                status: true,
                 cliente: [cliente],                
-                livro: livros
+                livro: livros                
             });            
             await pedidoRepository.save(novoPedido);         
 
-            
+            for (const livro of livros) {
+                livro.status = true;
+                await livroRepository.save(livro);
+            }
+
             return mapPedido(novoPedido);
-        } catch (error) {
-            console.error("Erro ao adicionar pedido:", error);
-            throw error;
+        } catch (Error) {
+            console.error("Erro ao adicionar pedido:", Error);
+            throw Error;
         }
     }
 
@@ -114,9 +125,11 @@ export class pedidoServices {
 
     async devolucaoPedido(id: number) {
         try {
-            const pedido = await pedidoRepository.findOneOrFail({ where: { id } });
-            if (pedido.status === true) {
-                throw new Error("Pedido já foi devolvido.");
+            const pedido = await pedidoRepository.findOneOrFail({ where: { id } }); 
+            
+            for (const livro of pedido.livro) {
+                livro.status = false;
+                await livroRepository.save(livro);
             }
 
             pedido.status = true
@@ -137,11 +150,7 @@ export class pedidoServices {
             console.error("Erro ao buscar pedido:", error);
             throw error;
         }
-    }
-
-
-
-    
+    }     
         
     
 }

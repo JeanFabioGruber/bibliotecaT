@@ -24,6 +24,9 @@ export class Livro {
   @Column()
   data_lancamento: Date;
 
+  @Column(  {default: false})
+  status: boolean;
+
   @CreateDateColumn()
   created_at: Date;
 

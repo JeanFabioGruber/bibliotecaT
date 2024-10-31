@@ -21,8 +21,8 @@ export class pedidoController {
         try {            
             const pedido = await pedidoservices.adicionarPedido(valor, datadoPedido, clienteId, livroIds);
             res.status(201).json(pedido);
-        } catch (error) {
-            res.status(500).json(error);
+        } catch (Error) {
+            res.status(500).json(Error);
         }
     }
 
@@ -70,8 +70,6 @@ export class pedidoController {
         } catch (error) {
             res.status(500).json(error);
         }
-    }
-
-    
+    }    
 
 }

@@ -3,12 +3,14 @@ import { mapGeneros } from "../../genero/mapper/generoMapper";
 import { mapEditora } from "../../editora/mapper/editoraMapper";
 import { mapAutor } from "../../autor/mapper/autorMapper";
 
+
 export const mapLivro = (livro: Livro) => ({
     id: livro.id,
     titulo: livro.titulo,
     descricao: livro.descricao,
     totaldepaginas: livro.totaldepaginas,
     data_lancamento: formatDate(livro.data_lancamento),
+    status: livro.status,
     genero: livro.genero.map(mapGeneros),
     editora: livro.editora.map(mapEditora),
     autor: livro.autor.map(mapAutor)
