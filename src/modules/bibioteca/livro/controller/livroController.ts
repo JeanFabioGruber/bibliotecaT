@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { livroService } from "../service/livroService";
+import { error } from "console";
 
 const livroservice = new livroService();
 
@@ -8,9 +9,10 @@ export class LivroController {
     async getLivros(req: Request, res: Response): Promise<void> {
         try {
             const livros = await livroservice.getLivros();
-            res.json(livros);
-        } catch (error) {
-            res.status(500).json({ mesage: error });
+            res.json(livros);            
+        } catch (Error) {
+            console.error("Erro ao buscar livros:", Error);
+            res.status(500).json({ mesage: "Erro ao buscar livros", error: Error });
         }
     }
 
@@ -21,12 +23,9 @@ export class LivroController {
         try {            
             const livro = await livroservice.adicionarLivro(titulo, descricao, totaldepaginas, data_lancamento, generosIds, editoraIds, autoresIds);
             res.status(201).json(livro);
-            
-
-            
-            
+                       
         } catch (error) {
-            res.status(500).json({ mesage: (error as Error).message });
+            res.status(500).json({ mesage: error });
         }
     }
 

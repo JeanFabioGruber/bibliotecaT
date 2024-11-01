@@ -7,16 +7,16 @@ import { autorRepository } from "../../autor/repositories/autorRepository";
 import { In } from "typeorm";
 
 export class livroService {    
-    async getLivros() {
-        try {
+    async getLivros() {       
             const livros = await livroRepository.find();
-            return livros.map(mapLivro)           
-    
-                       
-        } catch (error) {
-            return error;
-        }
+            if (livros.length > 0) {
+                return livros.map(mapLivro);
+            }
+
+            throw new Error("Não foi possível encontrar livros.");
+           
     }
+
     async adicionarLivro(
         titulo: string,
         descricao: string,
@@ -60,9 +60,7 @@ export class livroService {
 
         if ( await livroRepository.exists({where: {titulo}})) {
             throw new Error("Já existe um livro com esse título.");
-        }
-
-        try {
+        }        
             const { error } = livroCreateValidation.validate({
                 titulo,
                 descricao,
@@ -94,12 +92,9 @@ export class livroService {
             await livroRepository.save(novoLivro); 
             
             return mapLivro(novoLivro)
+        
             
-
-        } catch (error) {
-            console.error("Erro ao adicionar livro:", error);
-            throw new Error("Não foi possível adicionar o livro.");
-        }
+        
     }
 
     async updateLivro(
@@ -109,7 +104,7 @@ export class livroService {
         totaldepaginas: number,
         data_lancamento: Date,      
     ) {
-        try {            
+                   
             const livro = await livroRepository.findOneOrFail({ where: { id } });
     
             livro.titulo = titulo;
@@ -118,72 +113,89 @@ export class livroService {
             livro.data_lancamento = data_lancamento; 
 
             await livroRepository.save(livro);
-    
-            return mapLivro(livro);
-        } catch (error) {
-            console.error("Erro ao atualizar livro:", error);
-            throw new Error("Não foi possível atualizar o livro.");
-        }
 
-        
+            if (!livro) {
+                throw new Error("Livro não encontrado.");
+            }
+
+            
+    
+            return mapLivro(livro);        
     }
 
     async deleteLivro(id: number) {
-        try {            
+                   
             const livro = await livroRepository.findOneOrFail({ where: { id } });
             await livroRepository.remove(livro);
-        } catch (error) {
-            console.error("Erro ao deletar livro:", error);
-            throw new Error("Não foi possível deletar o livro.");
-        }
+
+            if (!livro) {
+                throw new Error("Livro não encontrado.");
+            }
+
+            return true;
+        
+            
+            
+        
     }
 
     async updateLivroGenero(id: number, generosIds: number[]) {
-        try {
+       
             const livro = await livroRepository.findOneOrFail({ where: { id } });
+            if (!livro) {
+                throw new Error("Livro não encontrado.");
+            }
             const generos = await generoRepository.findByIds(generosIds);
+            if(!generos) {
+                throw new Error("O livro deve ter pelo menos um gênero.");
+            }
             livro.genero = generos;
             await livroRepository.save(livro);
+                       
+
             return await livroRepository.findOneOrFail({
                 where: { id },
                 relations: ['genero']
-            });
-        } catch (error) {
-            console.error("Erro ao atualizar gêneros do livro:", error);
-            throw new Error("Não foi possível atualizar os gêneros do livro.");
-        }
+            });           
+        
     }
 
     async updateLivroAutor(id: number, autoresIds: number[]) {
-        try {
+        
             const livro = await livroRepository.findOneOrFail({ where: { id } });
+            if (!livro) {
+                throw new Error("Livro não encontrado.");
+            }
+
             const autores = await autorRepository.findByIds(autoresIds);
+            if(!autores) {
+                throw new Error("O livro deve ter pelo menos um autor.");
+            }
             livro.autor = autores;
             await livroRepository.save(livro);
             return await livroRepository.findOneOrFail({
                 where: { id },
                 relations: ['autor']
-            });
-        } catch (error) {
-            console.error("Erro ao atualizar autores do livro:", error);
-            throw new Error("Não foi possível atualizar os autores do livro.");
-        }
+            });        
+            
+        
     }
 
-    async updateLivroEditora(id: number, editorasIds: number[]) {
-        try {
+    async updateLivroEditora(id: number, editorasIds: number[]) {        
             const livro = await livroRepository.findOneOrFail({ where: { id } });
+            if (!livro) {
+                throw new Error("Livro não encontrado.");
+            }
             const editoras = await editoraRepository.findByIds(editorasIds);
+            if(!editoras) {
+                throw new Error("O livro deve ter pelo menos uma editora.");
+            }
             livro.editora = editoras;
             await livroRepository.save(livro);
             return await livroRepository.findOneOrFail({
                 where: { id },
                 relations: ['editora']
-            });
-        } catch (error) {
-            console.error("Erro ao atualizar editoras do livro:", error);
-            throw new Error("Não foi possível atualizar as editoras do livro.");
-        }
+            });        
     }
     
     
