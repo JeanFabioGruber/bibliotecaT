@@ -3,7 +3,7 @@ import { AppDataSource } from '../data-source';
 import routes from "../http/routes/routes";
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = 3333;
 
 AppDataSource.initialize()
     .then(() => {
